@@ -4,7 +4,9 @@ import Alamofire
 /// These functions are default mappings to `MoyaProvider`'s properties: endpoints, requests, manager, etc.
 public extension MoyaProvider {
     public final class func defaultEndpointMapping(for target: Target) -> Endpoint<Target> {
-        let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+        var url = target.baseURL.appendingPathComponent(target.path).absoluteString
+        url = url.replacingOccurrences(of: "%3F", with: "?")
+        
         return Endpoint(
             url: url,
             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
